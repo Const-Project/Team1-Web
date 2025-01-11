@@ -14,6 +14,14 @@ const GlobalStyle = () => (
       body {
         margin-left: 70px;
       }
+      li {
+        margin: 0px;
+      }
+      li,
+      ol,
+      ul {
+        list-style: none;
+      }
     `}
   />
 );

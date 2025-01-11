@@ -4,15 +4,39 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 interface PanelProps {
   isOpen: boolean;
 }
-const Panel = styled.div<PanelProps>`
+const Container = styled.div`
   position: absolute;
+  top: 0px;
+`;
+const MarkList = styled.ul`
+  position: absolute;
+  display: flex;
+  flex-direction: vertical;
+  left: 100%;
+  top: 15px;
+  margin-left: 30px;
+  gap: 12px;
+`;
+const Panel = styled.div<PanelProps>`
+  position: relative;
   top: 0;
   height: 100vh;
   background: white;
   z-index: 100;
   width: ${({ isOpen }) => (isOpen ? "400px" : "0px")};
   transition: width 0.3s ease-out;
-  box-shadow: 4px 0px 5px rgba(0, 0, 0, 0.03);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+`;
+const Mark = styled.button`
+  background: white;
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
 `;
 const Button = styled.button`
   position: absolute;
@@ -35,19 +59,32 @@ const HomeBoard: React.FC = () => {
   };
   return (
     <>
-      <Panel isOpen={isOpen}>
-        <Button onClick={toggleMenu}>
-          {!isOpen ? (
-            <>
-              <IoIosArrowForward />
-            </>
-          ) : (
-            <>
-              <IoIosArrowBack />
-            </>
-          )}
-        </Button>
-      </Panel>
+      <Container>
+        <Panel isOpen={isOpen}>
+          <MarkList>
+            <li>
+              <Mark> 화장실</Mark>
+            </li>
+            <li>
+              <Mark>정수기</Mark>
+            </li>
+            <li>
+              <Mark>카페</Mark>
+            </li>
+          </MarkList>
+          <Button onClick={toggleMenu}>
+            {!isOpen ? (
+              <>
+                <IoIosArrowForward />
+              </>
+            ) : (
+              <>
+                <IoIosArrowBack />
+              </>
+            )}
+          </Button>
+        </Panel>
+      </Container>
     </>
   );
 };
