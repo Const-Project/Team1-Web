@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 
 const Container = styled.div`
+  padding-top: 50px;
   left: 0px;
   width: 70px;
   max-height: 100%;

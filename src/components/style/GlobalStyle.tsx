@@ -12,7 +12,7 @@ const GlobalStyle = () => (
         padding: 0px;
       }
       body {
-        margin-left: 50px;
+        margin-left: 70px;
       }
     `}
   />

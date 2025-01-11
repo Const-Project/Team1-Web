@@ -9,11 +9,16 @@ const Kakaomap = () => {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
+      center: new kakao.maps.LatLng(37.552635722509, 126.92436042413),
+      level: 1,
     };
     new kakao.maps.Map(container, options);
   }, []);
-  return <div id="map" style={{ width: "500px", height: "400px" }}></div>;
+  return (
+    <div
+      id="map"
+      style={{ width: "calc(100vw - 70px)", height: "100vh" }}
+    ></div>
+  );
 };
 export default Kakaomap;
