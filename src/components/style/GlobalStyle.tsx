@@ -10,6 +10,7 @@ const GlobalStyle = () => (
         box-sizing: border-box;
         margin: 0px;
         padding: 0px;
+        text-decoration: none;
       }
       body {
         margin-left: 70px;

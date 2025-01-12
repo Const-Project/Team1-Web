@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
+import { BuildingInfo } from "./data/buildingData.ts";
+import BuildingDetail from "./BuildingDetail.tsx";
 interface PanelProps {
   isOpen: boolean;
 }
@@ -53,10 +55,14 @@ const Button = styled.button`
   font-size: 17px;
 `;
 
-const HomeBoard: React.FC = () => {
+const HomeBoard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [building, setBuilding] = useState<BuildingInfo | null>(null);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+  const handleClick = (building: BuildingInfo) => {
+    setBuilding(building);
   };
   return (
     <>
@@ -84,7 +90,11 @@ const HomeBoard: React.FC = () => {
           )}
         </Button>
         <Container>
-          <Building />
+          {building ? (
+            <BuildingDetail building={building} />
+          ) : (
+            <Building onBuildingClick={handleClick} />
+          )}
         </Container>
       </Panel>
     </>
