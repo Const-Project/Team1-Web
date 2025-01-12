@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Building from "./Building";
 interface PanelProps {
   isOpen: boolean;
 }
 const Container = styled.div`
-  position: absolute;
+  overflow: hidden;
   top: 0px;
 `;
 const MarkList = styled.ul`
@@ -18,7 +19,7 @@ const MarkList = styled.ul`
   gap: 12px;
 `;
 const Panel = styled.div<PanelProps>`
-  position: relative;
+  position: absolute;
   top: 0;
   height: 100vh;
   background: white;
@@ -59,32 +60,33 @@ const HomeBoard: React.FC = () => {
   };
   return (
     <>
-      <Container>
-        <Panel isOpen={isOpen}>
-          <MarkList>
-            <li>
-              <Mark> 화장실</Mark>
-            </li>
-            <li>
-              <Mark>정수기</Mark>
-            </li>
-            <li>
-              <Mark>카페</Mark>
-            </li>
-          </MarkList>
-          <Button onClick={toggleMenu}>
-            {!isOpen ? (
-              <>
-                <IoIosArrowForward />
-              </>
-            ) : (
-              <>
-                <IoIosArrowBack />
-              </>
-            )}
-          </Button>
-        </Panel>
-      </Container>
+      <Panel isOpen={isOpen}>
+        <MarkList>
+          <li>
+            <Mark> 화장실</Mark>
+          </li>
+          <li>
+            <Mark>정수기</Mark>
+          </li>
+          <li>
+            <Mark>카페</Mark>
+          </li>
+        </MarkList>
+        <Button onClick={toggleMenu}>
+          {!isOpen ? (
+            <>
+              <IoIosArrowForward />
+            </>
+          ) : (
+            <>
+              <IoIosArrowBack />
+            </>
+          )}
+        </Button>
+        <Container>
+          <Building />
+        </Container>
+      </Panel>
     </>
   );
 };
