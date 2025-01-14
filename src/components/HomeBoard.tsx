@@ -2,8 +2,67 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
-import { BuildingInfo } from "./data/buildingData.ts";
+import { BuildingInfo, FacilityInfo } from "./data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
+import FacilityDetail from "./FacilityDetail.tsx";
+
+const HomeBoard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [building, setBuilding] = useState<BuildingInfo | null>(null);
+  const [facility, setFacility] = useState<FacilityInfo | null>(null);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleClick = (building: BuildingInfo) => {
+    setBuilding(building);
+  };
+  const handleFacilityClick = (facility: FacilityInfo) => {
+    setFacility(facility);
+  };
+  return (
+    <>
+      <Panel isOpen={isOpen}>
+        <MarkList>
+          <li>
+            <Mark> 화장실</Mark>
+          </li>
+          <li>
+            <Mark>정수기</Mark>
+          </li>
+          <li>
+            <Mark>카페</Mark>
+          </li>
+        </MarkList>
+        <Button onClick={toggleMenu}>
+          {!isOpen ? (
+            <>
+              <IoIosArrowForward />
+            </>
+          ) : (
+            <>
+              <IoIosArrowBack />
+            </>
+          )}
+        </Button>
+        <Container>
+          {facility ? (
+            <FacilityDetail facility={facility} />
+          ) : building ? (
+            <BuildingDetail
+              building={building}
+              onFacilityClick={handleFacilityClick}
+            />
+          ) : (
+            <Building onBuildingClick={handleClick} />
+          )}
+        </Container>
+      </Panel>
+    </>
+  );
+};
+
+export default HomeBoard;
+
 interface PanelProps {
   isOpen: boolean;
 }
@@ -54,51 +113,3 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 17px;
 `;
-
-const HomeBoard = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [building, setBuilding] = useState<BuildingInfo | null>(null);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleClick = (building: BuildingInfo) => {
-    setBuilding(building);
-  };
-  return (
-    <>
-      <Panel isOpen={isOpen}>
-        <MarkList>
-          <li>
-            <Mark> 화장실</Mark>
-          </li>
-          <li>
-            <Mark>정수기</Mark>
-          </li>
-          <li>
-            <Mark>카페</Mark>
-          </li>
-        </MarkList>
-        <Button onClick={toggleMenu}>
-          {!isOpen ? (
-            <>
-              <IoIosArrowForward />
-            </>
-          ) : (
-            <>
-              <IoIosArrowBack />
-            </>
-          )}
-        </Button>
-        <Container>
-          {building ? (
-            <BuildingDetail building={building} />
-          ) : (
-            <Building onBuildingClick={handleClick} />
-          )}
-        </Container>
-      </Panel>
-    </>
-  );
-};
-
-export default HomeBoard;

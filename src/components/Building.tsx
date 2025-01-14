@@ -22,6 +22,7 @@ const BuildingItem = styled.a`
   display: flex;
   margin: 20px 0px;
   color: black;
+  cursor: pointer;
 `;
 const Image = styled.img`
   width: 100px;
@@ -54,7 +55,6 @@ const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
           <>
             <BuildingItem
               key={building.name}
-              href="#"
               onClick={() => onBuildingClick(building)}
             >
               <Image src={building.image} />

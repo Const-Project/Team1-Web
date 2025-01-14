@@ -1,11 +1,75 @@
 import styled from "@emotion/styled";
-import { BuildingInfo } from "./data/buildingData";
+import { BuildingInfo, FacilityInfo } from "./data/buildingData";
 import Divider from "./Divider";
 import { useState } from "react";
-const FacilityItems = styled.div`
+interface BuildingDetailProps {
+  building: BuildingInfo;
+  onFacilityClick?: (facility: FacilityInfo) => void;
+}
+const BuildingDetail: React.FC<BuildingDetailProps> = ({
+  building,
+  onFacilityClick,
+}) => {
+  const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
+
+  const handleFloorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFloor(event.target.value);
+  };
+  return (
+    <>
+      <Image src={building.image} alt={building.name} />
+      <Container>
+        <h2>{building.name}</h2>
+        <p>운영 시간: {building.time}</p>
+        <DropDown onChange={handleFloorChange}>
+          <option value="">층수 선택</option>
+          {building.floors.map((floor) => (
+            <option key={floor} value={floor}>
+              {floor}층
+            </option>
+          ))}
+        </DropDown>
+      </Container>
+      <Divider size={true} />
+      <Container>
+        <DetailTitle>
+          {selectedFloor ? `${selectedFloor}층 내부 시설` : "내부 시설"}
+        </DetailTitle>
+        <Facilities>
+          <Button>화장실</Button>
+          <Button>정수기</Button>
+          <Button>카페</Button>
+        </Facilities>
+        {building.facilities?.map((facility) => (
+          <>
+            <FacilityItems
+              key={facility.name}
+              onClick={() => onFacilityClick?.(facility)}
+            >
+              <TitleItems>
+                <DetailTitle>{facility.name}</DetailTitle>
+                <StoreButton>+ 저장</StoreButton>
+              </TitleItems>
+              <Review>아직까지 작성된 리뷰가 없습니다!</Review>
+              <Like>
+                <LikeButton>좋아요 {facility.like}개</LikeButton>
+                <LikeButton>싫어요 {facility.dislike}개</LikeButton>
+              </Like>
+            </FacilityItems>
+            <Divider size={false} />
+          </>
+        ))}
+      </Container>
+    </>
+  );
+};
+
+export default BuildingDetail;
+const FacilityItems = styled.a`
   display: flex;
-  padding: 20px 0px;
+  margin: 20px 0px;
   flex-direction: column;
+  cursor: pointer;
 `;
 const TitleItems = styled.div`
   display: flex;
@@ -54,9 +118,7 @@ const Button = styled.button`
     background: rgb(0, 51, 99, 0.5);
   }
 `;
-interface BuildingDetailProps {
-  building: BuildingInfo;
-}
+
 const Image = styled.img`
   width: 100%;
   height: 200px;
@@ -105,50 +167,3 @@ const LikeButton = styled.button`
     color: white;
   }
 `;
-const BuildingDetail: React.FC<BuildingDetailProps> = ({ building }) => {
-  const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
-
-  const handleFloorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFloor(event.target.value);
-  };
-  return (
-    <>
-      <Image src={building.image} alt={building.name} />
-      <Container>
-        <h2>{building.name}</h2>
-        <p>운영 시간: {building.time}</p>
-        <DropDown onChange={handleFloorChange}>
-          <option value="">층수 선택</option>
-          {building.floors.map((floor) => (
-            <option key={floor} value={floor}>
-              {floor}
-            </option>
-          ))}
-        </DropDown>
-      </Container>
-      <Divider size={true} />
-      <Container>
-        <DetailTitle>{selectedFloor} 내부시설</DetailTitle>
-        <Facilities>
-          <Button>화장실</Button>
-          <Button>정수기</Button>
-          <Button>카페</Button>
-        </Facilities>
-        <FacilityItems>
-          <TitleItems>
-            <DetailTitle>1층 화장실</DetailTitle>
-            <StoreButton>+ 저장</StoreButton>
-          </TitleItems>
-          <Review>아직까지 작성된 리뷰가 없습니다!</Review>
-          <Like>
-            <LikeButton>좋아요 0개</LikeButton>
-            <LikeButton>싫어요 0개</LikeButton>
-          </Like>
-        </FacilityItems>
-        <Divider size={false} />
-      </Container>
-    </>
-  );
-};
-
-export default BuildingDetail;
