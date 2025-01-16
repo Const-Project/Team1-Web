@@ -17,8 +17,8 @@ const Kakaomap: React.FC<KakaomapProps> = ({
   selectedBuilding,
   onBuildingClick,
 }) => {
-  const addMarkers = (map: any, selectedBuilding: BuildingInfo | null) => {
-    if (!selectedBuilding) {
+  const addMarkers = (map: any) => {
+    {
       buildingData.forEach((building) => {
         const markerPosition = new kakao.maps.LatLng(
           building.coordinates.lat,
@@ -32,18 +32,6 @@ const Kakaomap: React.FC<KakaomapProps> = ({
           onBuildingClick(building);
         });
       });
-    } else {
-      const markerPosition = new kakao.maps.LatLng(
-        selectedBuilding.coordinates.lat,
-        selectedBuilding.coordinates.lng
-      );
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(map);
-      kakao.maps.event.addListener(marker, "click", () => {
-        onBuildingClick(selectedBuilding);
-      });
     }
   };
 
@@ -54,7 +42,7 @@ const Kakaomap: React.FC<KakaomapProps> = ({
       level: 1,
     };
     const map = new kakao.maps.Map(container, options);
-    addMarkers(map, selectedBuilding);
+    addMarkers(map);
 
     // 선택된 건물이 변경될 때 지도를 해당 위치로 이동
     if (selectedBuilding) {

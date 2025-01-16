@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Divider from "./Divider.tsx";
 import { buildingData, BuildingInfo } from "./data/buildingData.ts";
+import Overflow from "./Overflow.tsx";
 
 interface BuildingProps {
   onBuildingClick: (building: BuildingInfo) => void;
@@ -8,28 +9,30 @@ interface BuildingProps {
 const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
   return (
     <>
-      <Container>
-        <Title>홍익대학교</Title>
-      </Container>
-      <Divider size={true} />
-      <Container>
-        <SubTitle>내부건물</SubTitle>
-        {buildingData.map((building) => (
-          <>
-            <BuildingItem
-              key={building.name}
-              onClick={() => onBuildingClick(building)}
-            >
-              <Image src={building.image} />
-              <Detail>
-                <Name>{building.name}</Name>
-                <div>운영 시간: {building.time}</div>
-              </Detail>
-            </BuildingItem>
-            <Divider size={false} />
-          </>
-        ))}
-      </Container>
+      <Overflow>
+        <Container>
+          <Title>홍익대학교</Title>
+        </Container>
+        <Divider size={true} />
+        <Container>
+          <SubTitle>내부건물</SubTitle>
+          {buildingData.map((building) => (
+            <>
+              <BuildingItem
+                key={building.name}
+                onClick={() => onBuildingClick(building)}
+              >
+                <Image src={building.image} />
+                <Detail>
+                  <Name>{building.name}</Name>
+                  <div>운영 시간: {building.time}</div>
+                </Detail>
+              </BuildingItem>
+              <Divider size={false} />
+            </>
+          ))}
+        </Container>
+      </Overflow>
     </>
   );
 };
@@ -39,7 +42,6 @@ const Container = styled.div`
   width: 400px;
   position: relative;
   padding: 20px 30px;
-  overflow: hidden;
 `;
 const Title = styled.div`
   margin: 10px 0px;
@@ -50,7 +52,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   font-size: 25px;
   font-weight: 500;
-  margin: 10px 0px;
+  margin-bottom: 10px;
 `;
 const BuildingItem = styled.a`
   display: flex;

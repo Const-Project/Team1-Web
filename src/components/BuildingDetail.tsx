@@ -3,6 +3,7 @@ import { BuildingInfo, FacilityInfo } from "./data/buildingData";
 import Divider from "./Divider";
 import { useState } from "react";
 import FacilityItem from "./FacilityItem.tsx";
+import Overflow from "./Overflow.tsx";
 interface BuildingDetailProps {
   building: BuildingInfo;
   onFacilityClick?: (facility: FacilityInfo) => void;
@@ -24,102 +25,105 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
   };
   return (
     <>
-      <Image src={building.image} alt={building.name} />
-      <Container>
-        <h2>{building.name}</h2>
-        <p>운영 시간: {building.time}</p>
-        <DropDown onChange={handleFloorChange}>
-          <option key={null} value="">
-            층수 선택
-          </option>
-          {building.floors.map((floor) => (
-            <option key={floor} value={floor}>
-              {floor}층
+      <Overflow>
+        <Image src={building.image} alt={building.name} />
+        <Container>
+          <h2>{building.name}</h2>
+          <p>운영 시간: {building.time}</p>
+          <DropDown onChange={handleFloorChange}>
+            <option key={null} value="">
+              층수 선택
             </option>
-          ))}
-        </DropDown>
-      </Container>
-      <Divider size={true} />
-      <Container>
-        <DetailTitle>
-          {selectedFloor ? `${selectedFloor}층 내부 시설` : "내부 시설"}
-        </DetailTitle>
-        <Facilities>
-          <Button
-            onClick={() => handleTypeChange(1)}
-            selected={1 === selectedType}
-          >
-            화장실
-          </Button>
-          <Button
-            onClick={() => handleTypeChange(2)}
-            selected={2 === selectedType}
-          >
-            정수기
-          </Button>
-          <Button
-            onClick={() => handleTypeChange(3)}
-            selected={3 === selectedType}
-          >
-            카페
-          </Button>
-        </Facilities>
-        {building.facilities?.map((facility) => (
-          <>
-            <FacilityItems
-              key={facility.name}
-              onClick={() => onFacilityClick?.(facility)}
+            {building.floors.map((floor) => (
+              <option key={floor} value={floor}>
+                {floor}층
+              </option>
+            ))}
+          </DropDown>
+        </Container>
+        <Divider size={true} />
+        <Container>
+          <DetailTitle>
+            {selectedFloor ? `${selectedFloor}층 내부 시설` : "내부 시설"}
+          </DetailTitle>
+          <Facilities>
+            <Button
+              onClick={() => handleTypeChange(1)}
+              selected={1 === selectedType}
             >
-              {selectedFloor ? (
-                <>
-                  {selectedFloor === facility.floor && (
-                    <>
-                      {selectedType ? (
-                        facility.type === selectedType && (
+              화장실
+            </Button>
+            <Button
+              onClick={() => handleTypeChange(2)}
+              selected={2 === selectedType}
+            >
+              정수기
+            </Button>
+            <Button
+              onClick={() => handleTypeChange(3)}
+              selected={3 === selectedType}
+            >
+              카페
+            </Button>
+          </Facilities>
+
+          {building.facilities?.map((facility) => (
+            <>
+              <FacilityItems
+                key={facility.name}
+                onClick={() => onFacilityClick?.(facility)}
+              >
+                {selectedFloor ? (
+                  <>
+                    {selectedFloor === facility.floor && (
+                      <>
+                        {selectedType ? (
+                          facility.type === selectedType && (
+                            <>
+                              <FacilityItem facility={facility} />
+                              <Divider size={false} />
+                            </>
+                          )
+                        ) : (
                           <>
                             <FacilityItem facility={facility} />
                             <Divider size={false} />
                           </>
-                        )
-                      ) : (
+                        )}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    {selectedType ? (
+                      facility.type === selectedType && (
                         <>
                           <FacilityItem facility={facility} />
                           <Divider size={false} />
                         </>
-                      )}
-                    </>
-                  )}
-                </>
-              ) : (
-                <>
-                  {" "}
-                  {selectedType ? (
-                    facility.type === selectedType && (
+                      )
+                    ) : (
                       <>
                         <FacilityItem facility={facility} />
                         <Divider size={false} />
                       </>
-                    )
-                  ) : (
-                    <>
-                      <FacilityItem facility={facility} />
-                      <Divider size={false} />
-                    </>
-                  )}
-                </>
-              )}
-            </FacilityItems>
-          </>
-        ))}
-      </Container>
+                    )}
+                  </>
+                )}
+              </FacilityItems>
+            </>
+          ))}
+        </Container>
+      </Overflow>
     </>
   );
 };
 
 export default BuildingDetail;
+
 const FacilityItems = styled.a`
   display: flex;
-  margin: 20px 0px;
   flex-direction: column;
   cursor: pointer;
 `;
@@ -127,11 +131,12 @@ const FacilityItems = styled.a`
 const Facilities = styled.div`
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
 `;
 const DetailTitle = styled.p`
   font-size: 20px;
   font-weight: 500;
-  margin: 10px 0px;
+  margin-bottom: 10px;
 `;
 interface ButtonProps {
   selected: boolean;
@@ -142,7 +147,7 @@ const Button = styled.button<ButtonProps>`
   color: white;
   padding: 5px 10px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 300;
   width: 84px;
   cursor: pointer;

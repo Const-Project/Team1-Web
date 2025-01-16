@@ -54,6 +54,46 @@ export const buildingData: BuildingInfo[] = [
           },
         ],
       },
+      {
+        building: "홍문관",
+        floor: "3",
+        type: 1,
+        name: "화장실",
+        like: 0,
+        dislike: 0,
+        reviewCount: 2,
+        review: [
+          {
+            contents: "안녕하세요",
+            user: "컴공생",
+            date: "2021.09.01",
+            like: 0,
+          },
+          {
+            contents: "깨끗해요!",
+            user: "자율전공샹",
+            date: "2025.10.01",
+            like: 3,
+          },
+        ],
+      },
+      {
+        building: "홍문관",
+        floor: "1",
+        type: 3,
+        name: "카페나무",
+        like: 4,
+        dislike: 2,
+        reviewCount: 1,
+        review: [
+          {
+            contents: "안녕하세요",
+            user: "컴공생",
+            date: "2021.09.01",
+            like: 0,
+          },
+        ],
+      },
     ],
   },
   {
