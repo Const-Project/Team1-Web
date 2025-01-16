@@ -8,6 +8,7 @@ export interface BuildingInfo {
 }
 export interface FacilityInfo {
   building: string;
+  type: number;
   floor: string;
   name: string;
   like: number;
@@ -33,6 +34,7 @@ export const buildingData: BuildingInfo[] = [
       {
         building: "홍문관",
         floor: "1",
+        type: 1,
         name: "화장실",
         like: 0,
         dislike: 0,
@@ -55,10 +57,36 @@ export const buildingData: BuildingInfo[] = [
     ],
   },
   {
-    image: "https://www.hongik.ac.kr/front/images/local/common/logo.png",
+    image:
+      "https://photo.hongik.ac.kr/app/board/attach/image/thumb_732_1700796628000.do",
     name: "와우관",
     time: "00:00~24:00",
     coordinates: { lat: 37.55167104651813, lng: 126.926557030475 },
     floors: [1, 2, 3, 4, 5, 6, 7, 8],
+    facilities: [
+      {
+        building: "와우관",
+        floor: "3",
+        type: 1,
+        name: "화장실",
+        like: 3,
+        dislike: 0,
+        reviewCount: 2,
+        review: [
+          {
+            contents: "안녕하세요",
+            user: "컴공생",
+            date: "2021.09.01",
+            like: 0,
+          },
+          {
+            contents: "깨끗해요!",
+            user: "자율전공샹",
+            date: "2025.10.01",
+            like: 3,
+          },
+        ],
+      },
+    ],
   },
 ];
