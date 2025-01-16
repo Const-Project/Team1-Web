@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { BuildingInfo, FacilityInfo } from "./data/buildingData";
 import Divider from "./Divider";
 import { useState } from "react";
+import LikeButton from "./LikeButton";
 interface BuildingDetailProps {
   building: BuildingInfo;
   onFacilityClick?: (facility: FacilityInfo) => void;
@@ -150,20 +151,4 @@ const Like = styled.div`
   display: flex;
   gap: 10px;
   margin: 15px 0px 10px 0px;
-`;
-
-const LikeButton = styled.button`
-  border: none;
-  background: rgb(0, 51, 99, 0.2);
-  color: black;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  white-space: nowrap;
-  &:hover {
-    background: rgb(0, 51, 99, 0.5);
-    color: white;
-  }
 `;

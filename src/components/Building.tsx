@@ -1,6 +1,40 @@
 import styled from "@emotion/styled";
 import Divider from "./Divider.tsx";
 import { buildingData, BuildingInfo } from "./data/buildingData.ts";
+
+interface BuildingProps {
+  onBuildingClick: (building: BuildingInfo) => void;
+}
+const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
+  return (
+    <>
+      <Container>
+        <Title>홍익대학교</Title>
+      </Container>
+      <Divider size={true} />
+      <Container>
+        <SubTitle>내부건물</SubTitle>
+        {buildingData.map((building) => (
+          <>
+            <BuildingItem
+              key={building.name}
+              onClick={() => onBuildingClick(building)}
+            >
+              <Image src={building.image} />
+              <Detail>
+                <Name>{building.name}</Name>
+                <div>운영 시간: {building.time}</div>
+              </Detail>
+            </BuildingItem>
+            <Divider size={false} />
+          </>
+        ))}
+      </Container>
+    </>
+  );
+};
+export default Building;
+
 const Container = styled.div`
   width: 400px;
   position: relative;
@@ -38,36 +72,3 @@ const Name = styled.div`
   font-size: 20px;
   font-weight: 500;
 `;
-
-interface BuildingProps {
-  onBuildingClick: (building: BuildingInfo) => void;
-}
-const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
-  return (
-    <>
-      <Container>
-        <Title>홍익대학교</Title>
-      </Container>
-      <Divider size={true} />
-      <Container>
-        <SubTitle>내부건물</SubTitle>
-        {buildingData.map((building) => (
-          <>
-            <BuildingItem
-              key={building.name}
-              onClick={() => onBuildingClick(building)}
-            >
-              <Image src={building.image} />
-              <Detail>
-                <Name>{building.name}</Name>
-                <div>운영 시간: {building.time}</div>
-              </Detail>
-            </BuildingItem>
-            <Divider size={false} />
-          </>
-        ))}
-      </Container>
-    </>
-  );
-};
-export default Building;

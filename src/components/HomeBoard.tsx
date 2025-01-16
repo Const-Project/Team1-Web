@@ -6,22 +6,28 @@ import { BuildingInfo, FacilityInfo } from "./data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
 import FacilityDetail from "./FacilityDetail.tsx";
 
-const HomeBoard = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [building, setBuilding] = useState<BuildingInfo | null>(null);
+interface HomeBoardProps {
+  onBuildingClick: (building: BuildingInfo) => void;
+  selectedBuilding: BuildingInfo | null;
+  isPanelOpen: boolean;
+  setIsPanelOpen: (isPanelOpen: boolean) => void;
+}
+const HomeBoard: React.FC<HomeBoardProps> = ({
+  selectedBuilding,
+  onBuildingClick,
+  isPanelOpen,
+  setIsPanelOpen,
+}) => {
   const [facility, setFacility] = useState<FacilityInfo | null>(null);
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleClick = (building: BuildingInfo) => {
-    setBuilding(building);
+    setIsPanelOpen(!isPanelOpen);
   };
   const handleFacilityClick = (facility: FacilityInfo) => {
     setFacility(facility);
   };
   return (
     <>
-      <Panel isOpen={isOpen}>
+      <Panel isOpen={isPanelOpen}>
         <MarkList>
           <li>
             <Mark> 화장실</Mark>
@@ -34,7 +40,7 @@ const HomeBoard = () => {
           </li>
         </MarkList>
         <Button onClick={toggleMenu}>
-          {!isOpen ? (
+          {!isPanelOpen ? (
             <>
               <IoIosArrowForward />
             </>
@@ -47,13 +53,13 @@ const HomeBoard = () => {
         <Container>
           {facility ? (
             <FacilityDetail facility={facility} />
-          ) : building ? (
+          ) : selectedBuilding ? (
             <BuildingDetail
-              building={building}
+              building={selectedBuilding}
               onFacilityClick={handleFacilityClick}
             />
           ) : (
-            <Building onBuildingClick={handleClick} />
+            <Building onBuildingClick={onBuildingClick} />
           )}
         </Container>
       </Panel>
