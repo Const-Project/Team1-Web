@@ -106,6 +106,23 @@ export const buildingData: BuildingInfo[] = [
     facilities: [
       {
         building: "와우관",
+        floor: "7",
+        type: 3,
+        name: "카페트리",
+        like: 4,
+        dislike: 2,
+        reviewCount: 1,
+        review: [
+          {
+            contents: "안녕하세요",
+            user: "컴공생",
+            date: "2021.09.01",
+            like: 0,
+          },
+        ],
+      },
+      {
+        building: "와우관",
         floor: "3",
         type: 1,
         name: "화장실",

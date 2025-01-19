@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
 import { BuildingInfo, FacilityInfo } from "./data/buildingData";
 import Divider from "./Divider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FacilityItem from "./FacilityItem.tsx";
 import Overflow from "./Overflow.tsx";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useAtom } from "jotai";
-import { isPanelOpenAtom, selectedBuildingAtom } from "../store/building.ts";
+import {
+  isPanelOpenAtom,
+  markFacilityAtom,
+  selectedBuildingAtom,
+} from "../store/building.ts";
 import { BackButton } from "./Buttons.tsx";
 interface BuildingDetailProps {
   building: BuildingInfo;
@@ -17,18 +21,22 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
   onFacilityClick,
 }) => {
   const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<number | null>(null);
   const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
+  const [markFacility, setMarkFacility] = useAtom(markFacilityAtom);
   const [isPanelOpen] = useAtom(isPanelOpenAtom);
   const handleTypeChange = (type: number) => {
-    setSelectedType(Number(type));
-    if (selectedType == type) {
-      setSelectedType(null);
+    if (markFacility === type) {
+      setMarkFacility(null);
+    } else {
+      setMarkFacility(type);
     }
   };
   const handleFloorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedFloor(event.target.value);
   };
+  useEffect(() => {
+    setSelectedFloor("");
+  }, [building]);
   return (
     <>
       <Overflow>
@@ -41,7 +49,7 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
         <Container>
           <h2>{building.name}</h2>
           <p>운영 시간: {building.time}</p>
-          <DropDown onChange={handleFloorChange}>
+          <DropDown value={selectedFloor ?? ""} onChange={handleFloorChange}>
             <option key={null} value="">
               층수 선택
             </option>
@@ -60,19 +68,19 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
           <Facilities>
             <Button
               onClick={() => handleTypeChange(1)}
-              selected={1 === selectedType}
+              selected={1 === markFacility}
             >
               화장실
             </Button>
             <Button
               onClick={() => handleTypeChange(2)}
-              selected={2 === selectedType}
+              selected={2 === markFacility}
             >
               정수기
             </Button>
             <Button
               onClick={() => handleTypeChange(3)}
-              selected={3 === selectedType}
+              selected={3 === markFacility}
             >
               카페
             </Button>
@@ -88,8 +96,8 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
                   <>
                     {selectedFloor === facility.floor && (
                       <>
-                        {selectedType ? (
-                          facility.type === selectedType && (
+                        {markFacility ? (
+                          facility.type === markFacility && (
                             <>
                               <FacilityItem facility={facility} />
                               <Divider size={false} />
@@ -107,8 +115,8 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
                 ) : (
                   <>
                     {" "}
-                    {selectedType ? (
-                      facility.type === selectedType && (
+                    {markFacility ? (
+                      facility.type === markFacility && (
                         <>
                           <FacilityItem facility={facility} />
                           <Divider size={false} />
@@ -171,7 +179,7 @@ const Button = styled.button<ButtonProps>`
     selected &&
     `
     background:  rgb(0, 51, 99, 0.5);
-  `}//
+  `}
 `;
 
 const Image = styled.img`
