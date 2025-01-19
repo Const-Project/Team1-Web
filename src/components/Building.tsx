@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import Divider from "./Divider.tsx";
-import { buildingData, BuildingInfo } from "./data/buildingData.ts";
+import { buildingData } from "./data/buildingData.ts";
 import Overflow from "./Overflow.tsx";
+import { useAtom } from "jotai";
+import { selectedBuildingAtom } from "../store/building.ts";
 
-interface BuildingProps {
-  onBuildingClick: (building: BuildingInfo) => void;
-}
-const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
+const Building = () => {
+  const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
   return (
     <>
       <Overflow>
@@ -20,7 +20,7 @@ const Building: React.FC<BuildingProps> = ({ onBuildingClick }) => {
             <>
               <BuildingItem
                 key={building.name}
-                onClick={() => onBuildingClick(building)}
+                onClick={() => setSelectedBuilding(building)}
               >
                 <Image src={building.image} />
                 <Detail>

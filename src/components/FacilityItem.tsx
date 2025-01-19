@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import LikeButton from "./LikeButton.tsx";
+import { LikeButton } from "./Buttons.tsx";
 import { FacilityInfo } from "./data/buildingData.ts";
 interface FacilityItemProps {
   facility?: FacilityInfo | null;

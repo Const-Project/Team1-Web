@@ -22,7 +22,7 @@ const HomePage = () => {
       <NavBar />
       <HomePageWrapper>
         <Kakaomap onBuildingClick={handleBuildingClick} />
-        <HomeBoard onBuildingClick={handleBuildingClick} />
+        <HomeBoard />
       </HomePageWrapper>
     </>
   );

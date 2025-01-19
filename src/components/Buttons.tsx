@@ -17,4 +17,14 @@ const LikeButton = styled.button`
     color: white;
   }
 `;
-export default LikeButton;
+const BackButton = styled.button`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+`;
+
+export { LikeButton, BackButton };

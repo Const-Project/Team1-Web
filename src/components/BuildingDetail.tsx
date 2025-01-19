@@ -4,7 +4,10 @@ import Divider from "./Divider";
 import { useState } from "react";
 import FacilityItem from "./FacilityItem.tsx";
 import Overflow from "./Overflow.tsx";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa6";
+import { useAtom } from "jotai";
+import { isPanelOpenAtom, selectedBuildingAtom } from "../store/building.ts";
+import { BackButton } from "./Buttons.tsx";
 interface BuildingDetailProps {
   building: BuildingInfo;
   onFacilityClick?: (facility: FacilityInfo) => void;
@@ -15,6 +18,8 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
 }) => {
   const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<number | null>(null);
+  const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
+  const [isPanelOpen] = useAtom(isPanelOpenAtom);
   const handleTypeChange = (type: number) => {
     setSelectedType(Number(type));
     if (selectedType == type) {
@@ -27,9 +32,11 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
   return (
     <>
       <Overflow>
-        <BackButton>
-          <FaArrowLeft size="20px" />
-        </BackButton>
+        {isPanelOpen && (
+          <BackButton onClick={() => setSelectedBuilding(null)}>
+            <FaAngleLeft size="25px" />
+          </BackButton>
+        )}
         <Image src={building.image} alt={building.name} />
         <Container>
           <h2>{building.name}</h2>
@@ -188,13 +195,4 @@ const DropDown = styled.select`
   background: #a7a7a7;
   color: white;
   appearance: none;
-`;
-const BackButton = styled.button`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: white;
 `;

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
-import { BuildingInfo, FacilityInfo } from "./data/buildingData.ts";
+import { FacilityInfo } from "./data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
 import FacilityDetail from "./FacilityDetail.tsx";
 import { useAtom } from "jotai";
@@ -11,10 +11,7 @@ import {
   selectedBuildingAtom,
 } from "../store/building.ts";
 
-interface HomeBoardProps {
-  onBuildingClick: (building: BuildingInfo) => void;
-}
-const HomeBoard: React.FC<HomeBoardProps> = ({ onBuildingClick }) => {
+const HomeBoard: React.FC = () => {
   const [isPanelOpen, setIsPanelOpen] = useAtom(isPanelOpenAtom);
   const [facility, setFacility] = useAtom(facilityAtom);
   const [selectedBuilding] = useAtom(selectedBuildingAtom);
@@ -58,7 +55,7 @@ const HomeBoard: React.FC<HomeBoardProps> = ({ onBuildingClick }) => {
               onFacilityClick={handleFacilityClick}
             />
           ) : (
-            <Building onBuildingClick={onBuildingClick} />
+            <Building />
           )}
         </Container>
       </Panel>

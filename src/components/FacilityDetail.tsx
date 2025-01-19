@@ -1,17 +1,26 @@
 import React from "react";
 import { FacilityInfo } from "./data/buildingData";
 import styled from "@emotion/styled";
-import LikeButton from "./LikeButton";
+import { BackButton, LikeButton } from "./Buttons";
 import Divider from "./Divider";
 import { IoMdHeart } from "react-icons/io";
-
+import { FaAngleLeft } from "react-icons/fa6";
+import { facilityAtom, isPanelOpenAtom } from "../store/building.ts";
+import { useAtom } from "jotai";
 interface FacilityDetailProps {
   facility: FacilityInfo;
 }
 
 const FacilityDetail: React.FC<FacilityDetailProps> = ({ facility }) => {
+  const [, setFacility] = useAtom(facilityAtom);
+  const [isPanelOpen] = useAtom(isPanelOpenAtom);
   return (
     <>
+      {isPanelOpen && (
+        <BackButton onClick={() => setFacility(null)}>
+          <FaAngleLeft size="25px" color="gray" />
+        </BackButton>
+      )}
       <Container>
         <Title>
           <h2>
@@ -77,12 +86,13 @@ const ReviewContainer = styled.div`
 `;
 const Container = styled.div`
   width: 400px;
-  padding: 20px 30px;
+  padding: 20px 40px;
+  overflow: hidden;
 `;
 const Title = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 const Building = styled.p`
   margin-left: 10px;
