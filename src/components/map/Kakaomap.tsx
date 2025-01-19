@@ -37,6 +37,7 @@ const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
             marker.setMap(map);
             kakao.maps.event.addListener(marker, "click", () => {
               onBuildingClick(building);
+              setFacility(null);
             });
           }
         });
