@@ -2,18 +2,17 @@ import styled from "@emotion/styled";
 import HomeBoard from "../HomeBoard.tsx";
 import Kakaomap from "../map/Kakaomap.tsx";
 import NavBar from "../nav/NavBar.tsx";
-import { useState } from "react";
 import { BuildingInfo } from "../data/buildingData.ts";
+import { isPanelOpenAtom, selectedBuildingAtom } from "../../store/building.ts";
+import { useAtom } from "jotai";
 const HomePageWrapper = styled.div`
   position: relative;
   width: calc(100vw - 70px);
   height: 100vh;
 `;
 const HomePage = () => {
-  const [selectedBuilding, setSelectedBuilding] = useState<BuildingInfo | null>(
-    null
-  );
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
+  const [, setIsPanelOpen] = useAtom(isPanelOpenAtom);
   const handleBuildingClick = (building: BuildingInfo) => {
     setSelectedBuilding(building);
     setIsPanelOpen(true);
@@ -22,16 +21,8 @@ const HomePage = () => {
     <>
       <NavBar />
       <HomePageWrapper>
-        <Kakaomap
-          selectedBuilding={selectedBuilding}
-          onBuildingClick={handleBuildingClick}
-        />
-        <HomeBoard
-          selectedBuilding={selectedBuilding}
-          onBuildingClick={handleBuildingClick}
-          isPanelOpen={isPanelOpen}
-          setIsPanelOpen={setIsPanelOpen}
-        />
+        <Kakaomap onBuildingClick={handleBuildingClick} />
+        <HomeBoard onBuildingClick={handleBuildingClick} />
       </HomePageWrapper>
     </>
   );

@@ -1,24 +1,23 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
 import { BuildingInfo, FacilityInfo } from "./data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
 import FacilityDetail from "./FacilityDetail.tsx";
+import { useAtom } from "jotai";
+import {
+  facilityAtom,
+  isPanelOpenAtom,
+  selectedBuildingAtom,
+} from "../store/building.ts";
 
 interface HomeBoardProps {
   onBuildingClick: (building: BuildingInfo) => void;
-  selectedBuilding: BuildingInfo | null;
-  isPanelOpen: boolean;
-  setIsPanelOpen: (isPanelOpen: boolean) => void;
 }
-const HomeBoard: React.FC<HomeBoardProps> = ({
-  selectedBuilding,
-  onBuildingClick,
-  isPanelOpen,
-  setIsPanelOpen,
-}) => {
-  const [facility, setFacility] = useState<FacilityInfo | null>(null);
+const HomeBoard: React.FC<HomeBoardProps> = ({ onBuildingClick }) => {
+  const [isPanelOpen, setIsPanelOpen] = useAtom(isPanelOpenAtom);
+  const [facility, setFacility] = useAtom(facilityAtom);
+  const [selectedBuilding] = useAtom(selectedBuildingAtom);
   const toggleMenu = () => {
     setIsPanelOpen(!isPanelOpen);
   };

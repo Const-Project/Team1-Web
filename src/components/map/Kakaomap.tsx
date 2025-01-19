@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { buildingData, BuildingInfo } from "../data/buildingData";
+import { useAtom } from "jotai";
+import { facilityAtom, selectedBuildingAtom } from "../../store/building.ts";
 
 declare global {
   interface Window {
@@ -10,13 +12,11 @@ declare global {
 const { kakao } = window;
 
 interface KakaomapProps {
-  selectedBuilding: BuildingInfo | null;
   onBuildingClick: (building: BuildingInfo) => void;
 }
-const Kakaomap: React.FC<KakaomapProps> = ({
-  selectedBuilding,
-  onBuildingClick,
-}) => {
+const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
+  const [selectedBuilding] = useAtom(selectedBuildingAtom);
+  const [, setFacility] = useAtom(facilityAtom);
   const addMarkers = (map: any) => {
     {
       buildingData.forEach((building) => {
@@ -30,6 +30,7 @@ const Kakaomap: React.FC<KakaomapProps> = ({
         marker.setMap(map);
         kakao.maps.event.addListener(marker, "click", () => {
           onBuildingClick(building);
+          setFacility(null);
         });
       });
     }
