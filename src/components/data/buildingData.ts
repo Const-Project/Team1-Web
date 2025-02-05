@@ -59,7 +59,7 @@ export const buildingData: BuildingInfo[] = [
         floor: "3",
         type: 1,
         name: "화장실",
-        like: 0,
+        like: 3,
         dislike: 0,
         reviewCount: 2,
         review: [
@@ -109,7 +109,7 @@ export const buildingData: BuildingInfo[] = [
         floor: "7",
         type: 3,
         name: "카페트리",
-        like: 4,
+        like: 10,
         dislike: 2,
         reviewCount: 1,
         review: [
@@ -126,7 +126,7 @@ export const buildingData: BuildingInfo[] = [
         floor: "3",
         type: 1,
         name: "화장실",
-        like: 3,
+        like: 9,
         dislike: 0,
         reviewCount: 2,
         review: [

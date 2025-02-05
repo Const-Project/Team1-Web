@@ -13,7 +13,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/join" element={<JoinPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BuildingInfo, FacilityInfo } from "./data/buildingData";
+import { BuildingInfo, FacilityInfo } from "../data/buildingData";
 import Divider from "./Divider";
 import { useEffect, useState } from "react";
 import FacilityItem from "./FacilityItem.tsx";
@@ -10,7 +10,7 @@ import {
   isPanelOpenAtom,
   markFacilityAtom,
   selectedBuildingAtom,
-} from "../store/building.ts";
+} from "../../store/building.ts";
 import { BackButton } from "./Buttons.tsx";
 interface BuildingDetailProps {
   building: BuildingInfo;
@@ -60,7 +60,7 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
             ))}
           </DropDown>
         </Container>
-        <Divider size={true} />
+        <Divider sizes={true} />
         <Container>
           <DetailTitle>
             {selectedFloor ? `${selectedFloor}층 내부 시설` : "내부 시설"}
@@ -87,7 +87,7 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
           </Facilities>
 
           {building.facilities?.map((facility) => (
-            <>
+            <div key={facility.like}>
               <FacilityItems
                 key={facility.name}
                 onClick={() => onFacilityClick?.(facility)}
@@ -100,13 +100,13 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
                           facility.type === markFacility && (
                             <>
                               <FacilityItem facility={facility} />
-                              <Divider size={false} />
+                              <Divider sizes={false} />
                             </>
                           )
                         ) : (
                           <>
                             <FacilityItem facility={facility} />
-                            <Divider size={false} />
+                            <Divider sizes={false} />
                           </>
                         )}
                       </>
@@ -119,19 +119,19 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
                       facility.type === markFacility && (
                         <>
                           <FacilityItem facility={facility} />
-                          <Divider size={false} />
+                          <Divider sizes={false} />
                         </>
                       )
                     ) : (
                       <>
                         <FacilityItem facility={facility} />
-                        <Divider size={false} />
+                        <Divider sizes={false} />
                       </>
                     )}
                   </>
                 )}
               </FacilityItems>
-            </>
+            </div>
           ))}
         </Container>
       </Overflow>

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import Divider from "./Divider.tsx";
-import { buildingData } from "./data/buildingData.ts";
+import { buildingData } from "../data/buildingData.ts";
 import Overflow from "./Overflow.tsx";
 import { useAtom } from "jotai";
-import { selectedBuildingAtom } from "../store/building.ts";
+import { selectedBuildingAtom } from "../../store/building.ts";
 
 const Building = () => {
   const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
@@ -13,11 +13,11 @@ const Building = () => {
         <Container>
           <Title>홍익대학교</Title>
         </Container>
-        <Divider size={true} />
+        <Divider sizes={true} />
         <Container>
           <SubTitle>내부건물</SubTitle>
           {buildingData.map((building) => (
-            <>
+            <div key={building.name}>
               <BuildingItem
                 key={building.name}
                 onClick={() => setSelectedBuilding(building)}
@@ -28,8 +28,8 @@ const Building = () => {
                   <div>운영 시간: {building.time}</div>
                 </Detail>
               </BuildingItem>
-              <Divider size={false} />
-            </>
+              <Divider sizes={false} />
+            </div>
           ))}
         </Container>
       </Overflow>

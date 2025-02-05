@@ -25,7 +25,6 @@ const BackButton = styled.button`
   border: none;
   cursor: pointer;
   color: white;
-  
 `;
 
 export { LikeButton, BackButton };

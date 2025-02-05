@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import HomeBoard from "../HomeBoard.tsx";
+import HomeBoard from "../HomePage/HomeBoard.tsx";
 import Kakaomap from "../map/Kakaomap.tsx";
 import NavBar from "../nav/NavBar.tsx";
 import { BuildingInfo } from "../data/buildingData.ts";

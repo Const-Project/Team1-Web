@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
-import { FacilityInfo } from "./data/buildingData.ts";
+import { FacilityInfo } from "../data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
-import FacilityDetail from "./FacilityDetail.tsx";
+import FacilityDetail from "./facilityDetail/FacilityDetail.tsx";
 import { useAtom } from "jotai";
 import {
   facilityAtom,
   isPanelOpenAtom,
   selectedBuildingAtom,
   markFacilityAtom,
-} from "../store/building.ts";
+} from "../../store/building.ts";
 
 const HomeBoard: React.FC = () => {
   const [isPanelOpen, setIsPanelOpen] = useAtom(isPanelOpenAtom);
