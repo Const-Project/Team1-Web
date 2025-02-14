@@ -19,7 +19,7 @@ const FacilityDetail: React.FC<FacilityDetailProps> = ({ facility }) => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const fetchData = async () => {
-    const token = sessionStorage.getItem("accesstoken");
+    const token = sessionStorage.getItem("accessToken");
     if (token) {
       setIsLogin(true);
     }

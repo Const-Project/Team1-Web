@@ -11,11 +11,14 @@ interface ReviewCardProps {
   };
 }
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+  const handleLike = () => {
+    console.log("좋아요");
+  };
   return (
     <ReviewContainer>
       <Review>
         <div>{review.contents}</div>
-        <LikeButton>
+        <LikeButton onClick={() => handleLike()}>
           <IoMdHeart size="13" style={{ marginRight: 5, marginTop: 1 }} />
           {review.like}
         </LikeButton>

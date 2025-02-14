@@ -5,13 +5,18 @@ interface FacilityInformProps {
   facility: FacilityInfo;
 }
 const FacilityInform: React.FC<FacilityInformProps> = ({ facility }) => {
-  const handleLike = (like: boolean) => {
-    if (like) {
-      facility.like += 1;
+  const handleLike = async (like: boolean) => {
+    if (sessionStorage.getItem("accessToken")) {
+      if (like) {
+        facility.like += 1;
+      } else {
+        facility.dislike += 1;
+      }
     } else {
-      facility.dislike += 1;
+      alert("로그인을 해주세요");
     }
   };
+
   return (
     <>
       <Container>
