@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { LikeButton } from "./Buttons.tsx";
-import { FacilityInfo } from "../data/buildingData.ts";
+import { FacilitySetInfo } from "../data/buildingData.ts";
 interface FacilityItemProps {
-  facility?: FacilityInfo | null;
+  facility?: FacilitySetInfo | null;
 }
 const FacilityItem: React.FC<FacilityItemProps> = ({ facility }) => {
   return (
@@ -17,8 +17,8 @@ const FacilityItem: React.FC<FacilityItemProps> = ({ facility }) => {
           </TitleItems>
           <Review>아직까지 작성된 리뷰가 없습니다!</Review>
           <Like>
-            <LikeButton>좋아요 {facility.like}개</LikeButton>
-            <LikeButton>싫어요 {facility.dislike}개</LikeButton>
+            <LikeButton>좋아요 {facility.totalLikes}개</LikeButton>
+            <LikeButton>싫어요 0개</LikeButton>
           </Like>
         </>
       ) : (

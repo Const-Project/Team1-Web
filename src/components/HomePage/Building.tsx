@@ -1,12 +1,26 @@
 import styled from "@emotion/styled";
 import Divider from "./Divider.tsx";
-import { buildingData } from "../data/buildingData.ts";
 import Overflow from "./Overflow.tsx";
 import { useAtom } from "jotai";
 import { selectedBuildingAtom } from "../../store/building.ts";
-
+import axios from "../../libs/axios.tsx";
+import { useEffect, useState } from "react";
+import { BuildingDataInfo } from "../data/buildingData.tsx";
 const Building = () => {
   const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
+  const [buildingData, setBuildingData] = useState<BuildingDataInfo[]>([]);
+  const fetchBuilding = async () => {
+    try {
+      const response = await axios.get("/buildings/all");
+      console.log(response.data);
+      setBuildingData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchBuilding();
+  }, []);
   return (
     <>
       <Overflow>
@@ -17,15 +31,17 @@ const Building = () => {
         <Container>
           <SubTitle>내부건물</SubTitle>
           {buildingData.map((building) => (
-            <div key={building.name}>
+            <div key={building.buildingId}>
               <BuildingItem
                 key={building.name}
                 onClick={() => setSelectedBuilding(building)}
               >
-                <Image src={building.image} />
+                <Image src={building.imageUrl} />
                 <Detail>
                   <Name>{building.name}</Name>
-                  <div>운영 시간: {building.time}</div>
+                  <div>
+                    운영 시간: {building.closeTime} - {building.openTime}
+                  </div>
                 </Detail>
               </BuildingItem>
               <Divider sizes={false} />

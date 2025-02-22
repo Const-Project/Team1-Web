@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BuildingInfo, FacilityInfo } from "../data/buildingData";
+import { BuildingDataInfo, FacilitySetInfo } from "../data/buildingData";
 import Divider from "./Divider";
 import { useEffect, useState } from "react";
 import FacilityItem from "./FacilityItem.tsx";
@@ -13,8 +13,8 @@ import {
 } from "../../store/building.ts";
 import { BackButton } from "./Buttons.tsx";
 interface BuildingDetailProps {
-  building: BuildingInfo;
-  onFacilityClick?: (facility: FacilityInfo) => void;
+  building: BuildingDataInfo;
+  onFacilityClick?: (facility: FacilitySetInfo) => void;
 }
 const BuildingDetail: React.FC<BuildingDetailProps> = ({
   building,
@@ -45,10 +45,12 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
             <FaAngleLeft size="25px" />
           </BackButton>
         )}
-        <Image src={building.image} alt={building.name} />
+        <Image src={building.imageUrl} alt={building.name} />
         <Container>
           <h2>{building.name}</h2>
-          <p>운영 시간: {building.time}</p>
+          <p>
+            운영 시간: {building.openTime} - {building.closeTime}
+          </p>
           <DropDown value={selectedFloor ?? ""} onChange={handleFloorChange}>
             <option key={null} value="">
               층수 선택
@@ -67,37 +69,37 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
           </DetailTitle>
           <Facilities>
             <Button
-              onClick={() => handleTypeChange(1)}
-              selected={1 === markFacility}
+              onClick={() => handleTypeChange(3)}
+              selected={3 === markFacility}
             >
               화장실
             </Button>
             <Button
-              onClick={() => handleTypeChange(2)}
-              selected={2 === markFacility}
-            >
-              정수기
-            </Button>
-            <Button
-              onClick={() => handleTypeChange(3)}
-              selected={3 === markFacility}
+              onClick={() => handleTypeChange(4)}
+              selected={4 === markFacility}
             >
               카페
             </Button>
+            <Button
+              onClick={() => handleTypeChange(5)}
+              selected={5 === markFacility}
+            >
+              도서관
+            </Button>
           </Facilities>
 
-          {building.facilities?.map((facility) => (
-            <div key={facility.like}>
+          {building.facilitySet?.map((facility) => (
+            <div key={facility.totalLikes}>
               <FacilityItems
-                key={facility.name}
+                key={facility.facilityId}
                 onClick={() => onFacilityClick?.(facility)}
               >
                 {selectedFloor ? (
                   <>
-                    {selectedFloor === facility.floor && (
+                    {parseInt(selectedFloor) === facility.floor && (
                       <>
                         {markFacility ? (
-                          facility.type === markFacility && (
+                          facility.categoryId === markFacility && (
                             <>
                               <FacilityItem facility={facility} />
                               <Divider sizes={false} />
@@ -116,7 +118,7 @@ const BuildingDetail: React.FC<BuildingDetailProps> = ({
                   <>
                     {" "}
                     {markFacility ? (
-                      facility.type === markFacility && (
+                      facility.categoryId === markFacility && (
                         <>
                           <FacilityItem facility={facility} />
                           <Divider sizes={false} />

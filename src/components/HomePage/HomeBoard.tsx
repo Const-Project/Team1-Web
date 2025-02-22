@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Building from "./Building";
-import { FacilityInfo } from "../data/buildingData.ts";
+import { FacilitySetInfo } from "../data/buildingData.ts";
 import BuildingDetail from "./BuildingDetail.tsx";
 import FacilityDetail from "./facilityDetail/FacilityDetail.tsx";
 import { useAtom } from "jotai";
@@ -20,7 +20,7 @@ const HomeBoard: React.FC = () => {
   const toggleMenu = () => {
     setIsPanelOpen(!isPanelOpen);
   };
-  const handleFacilityClick = (facility: FacilityInfo) => {
+  const handleFacilityClick = (facility: FacilitySetInfo) => {
     setFacility(facility);
   };
   const handleMarkFacility = (selectedMarkFacility: number) => {
@@ -35,8 +35,8 @@ const HomeBoard: React.FC = () => {
         <MarkList>
           <li>
             <Mark
-              onClick={() => handleMarkFacility(1)}
-              selected={markFacility === 1}
+              onClick={() => handleMarkFacility(3)}
+              selected={markFacility === 3}
             >
               {" "}
               화장실
@@ -44,18 +44,18 @@ const HomeBoard: React.FC = () => {
           </li>
           <li>
             <Mark
-              onClick={() => handleMarkFacility(2)}
-              selected={markFacility === 2}
+              onClick={() => handleMarkFacility(4)}
+              selected={markFacility === 4}
             >
-              정수기
+              카페
             </Mark>
           </li>
           <li>
             <Mark
-              onClick={() => handleMarkFacility(3)}
-              selected={markFacility === 3}
+              onClick={() => handleMarkFacility(5)}
+              selected={markFacility === 5}
             >
-              카페
+              도서관
             </Mark>
           </li>
         </MarkList>

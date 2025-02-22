@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { buildingData, BuildingInfo } from "../data/buildingData";
+import { BuildingDataInfo } from "../data/buildingData";
 import { useAtom } from "jotai";
 import {
   facilityAtom,
   markFacilityAtom,
   selectedBuildingAtom,
 } from "../../store/building.ts";
+import axios from "../../libs/axios.tsx";
 
 declare global {
   interface Window {
@@ -16,20 +17,22 @@ declare global {
 const { kakao } = window;
 
 interface KakaomapProps {
-  onBuildingClick: (building: BuildingInfo) => void;
+  onBuildingClick: (building: BuildingDataInfo) => void;
 }
 const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
   const [selectedBuilding] = useAtom(selectedBuildingAtom);
   const [, setFacility] = useAtom(facilityAtom);
   const [markFacility] = useAtom(markFacilityAtom);
-  const addMarkers = (map: any) => {
+
+  const addMarkers = async (map: any) => {
+    const response = await axios.get("/buildings/all");
     if (markFacility) {
-      buildingData.forEach((building) => {
-        building.facilities?.forEach((facility) => {
-          if (facility.type === markFacility) {
+      response.data.forEach((building: BuildingDataInfo) => {
+        building.facilitySet?.forEach((facility) => {
+          if (facility.categoryId === markFacility) {
             const markerPosition = new kakao.maps.LatLng(
-              building.coordinates.lat,
-              building.coordinates.lng
+              building.latitude,
+              building.longitude
             );
             const marker = new kakao.maps.Marker({
               position: markerPosition,
@@ -43,10 +46,10 @@ const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
         });
       });
     } else {
-      buildingData.forEach((building) => {
+      response.data.forEach((building: BuildingDataInfo) => {
         const markerPosition = new kakao.maps.LatLng(
-          building.coordinates.lat,
-          building.coordinates.lng
+          building.latitude,
+          building.longitude
         );
         const marker = new kakao.maps.Marker({
           position: markerPosition,
@@ -63,7 +66,7 @@ const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(37.55087078580574, 126.92555912211695),
+      center: new kakao.maps.LatLng(37.550873036516045, 126.92555629071806),
       level: 2,
     };
     const map = new kakao.maps.Map(container, options);
@@ -71,8 +74,8 @@ const Kakaomap: React.FC<KakaomapProps> = ({ onBuildingClick }) => {
 
     if (selectedBuilding) {
       const moveLatLon = new kakao.maps.LatLng(
-        selectedBuilding.coordinates.lat,
-        selectedBuilding.coordinates.lng
+        selectedBuilding.latitude,
+        selectedBuilding.longitude
       );
       map.setCenter(moveLatLon);
     }

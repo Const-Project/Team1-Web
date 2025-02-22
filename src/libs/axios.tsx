@@ -1,8 +1,9 @@
 import axios from "axios";
-const baseURL = "http://15.164.98.149:8080/v1/";
+const baseURL = "https://juhoec2ddns.ddns.net/v1";
 const instance = axios.create({
   baseURL,
-  timeout: 15000,
+  timeout: 3000,
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
@@ -17,3 +18,4 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+export default instance;

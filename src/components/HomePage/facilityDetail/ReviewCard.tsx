@@ -1,14 +1,10 @@
 import { IoMdHeart } from "react-icons/io";
 import { LikeButton } from "../Buttons";
 import styled from "@emotion/styled";
+import { ReviewInfo } from "../../data/buildingData";
 
 interface ReviewCardProps {
-  review: {
-    contents: string;
-    like: number;
-    user: string;
-    date: string;
-  };
+  review: ReviewInfo;
 }
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   const handleLike = () => {
@@ -17,10 +13,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   return (
     <ReviewContainer>
       <Review>
-        <div>{review.contents}</div>
+        <div>{review.content}</div>
         <LikeButton onClick={() => handleLike()}>
           <IoMdHeart size="13" style={{ marginRight: 5, marginTop: 1 }} />
-          {review.like}
+          {review.totalLikes}
         </LikeButton>
       </Review>
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -31,9 +27,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             fontWeight: 400,
           }}
         >
-          {review.user}
+          {review.reviewId}
         </div>
-        <div style={{ fontSize: "14px", color: "#828282" }}>{review.date}</div>
+        <div style={{ fontSize: "14px", color: "#828282" }}>
+          {review.createdAt}
+        </div>
       </div>
     </ReviewContainer>
   );

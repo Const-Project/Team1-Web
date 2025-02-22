@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import HomeBoard from "../HomePage/HomeBoard.tsx";
 import Kakaomap from "../map/Kakaomap.tsx";
 import NavBar from "../nav/NavBar.tsx";
-import { BuildingInfo } from "../data/buildingData.ts";
+import { BuildingDataInfo } from "../data/buildingData.ts";
 import { isPanelOpenAtom, selectedBuildingAtom } from "../../store/building.ts";
 import { useAtom } from "jotai";
 const HomePageWrapper = styled.div`
@@ -13,7 +13,7 @@ const HomePageWrapper = styled.div`
 const HomePage = () => {
   const [, setSelectedBuilding] = useAtom(selectedBuildingAtom);
   const [, setIsPanelOpen] = useAtom(isPanelOpenAtom);
-  const handleBuildingClick = (building: BuildingInfo) => {
+  const handleBuildingClick = (building: BuildingDataInfo) => {
     setSelectedBuilding(building);
     setIsPanelOpen(true);
   };

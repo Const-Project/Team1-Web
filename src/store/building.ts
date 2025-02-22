@@ -1,10 +1,10 @@
 import { atom } from "jotai";
 import {
-  BuildingInfo,
-  FacilityInfo,
+  BuildingDataInfo,
+  FacilitySetInfo,
 } from "../components/data/buildingData.tsx";
 
-export const selectedBuildingAtom = atom<BuildingInfo | null>(null);
+export const selectedBuildingAtom = atom<BuildingDataInfo | null>(null);
 export const isPanelOpenAtom = atom<boolean>(false);
-export const facilityAtom = atom<FacilityInfo | null>(null);
+export const facilityAtom = atom<FacilitySetInfo | null>(null);
 export const markFacilityAtom = atom<number | null>(null);

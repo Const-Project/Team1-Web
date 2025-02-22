@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
-import { FacilityInfo } from "../../data/buildingData.ts";
+import { FacilitySetInfo } from "../../data/buildingData.ts";
 import { LikeButton } from "../Buttons.tsx";
 interface FacilityInformProps {
-  facility: FacilityInfo;
+  facility: FacilitySetInfo;
 }
 const FacilityInform: React.FC<FacilityInformProps> = ({ facility }) => {
   const handleLike = async (like: boolean) => {
     if (sessionStorage.getItem("accessToken")) {
       if (like) {
-        facility.like += 1;
+        facility.totalLikes += 1;
       } else {
-        facility.dislike += 1;
+        facility.totalDisLikes += 1;
       }
     } else {
       alert("로그인을 해주세요");
@@ -24,15 +24,13 @@ const FacilityInform: React.FC<FacilityInformProps> = ({ facility }) => {
           <h2>
             {facility.floor}층 {facility.name}
           </h2>
-          <Building>{facility.building} </Building>
+          <Building>건물</Building>
         </Title>
         <Like>
           <LikeButton onClick={() => handleLike(true)}>
-            좋아요 {facility.like}개
+            좋아요 {facility.totalLikes}개
           </LikeButton>
-          <LikeButton onClick={() => handleLike(false)}>
-            싫어요 {facility.dislike}개
-          </LikeButton>
+          <LikeButton onClick={() => handleLike(false)}>싫어요 0개</LikeButton>
         </Like>
       </Container>
     </>

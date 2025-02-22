@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FacilityInfo } from "../../data/buildingData.ts";
+import { FacilitySetInfo } from "../../data/buildingData.ts";
 import styled from "@emotion/styled";
 import { BackButton } from "../Buttons.tsx";
 import Divider from "../Divider.tsx";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import FacilityInform from "./FacilityInform.tsx";
 import ReviewCard from "./ReviewCard.tsx";
 interface FacilityDetailProps {
-  facility: FacilityInfo;
+  facility: FacilitySetInfo;
 }
 
 const FacilityDetail: React.FC<FacilityDetailProps> = ({ facility }) => {
@@ -41,7 +41,7 @@ const FacilityDetail: React.FC<FacilityDetailProps> = ({ facility }) => {
       <Divider sizes={true} />
       <Container>
         <Review>
-          <h3>리뷰 {facility.reviewCount}개</h3>
+          <h3>리뷰 {facility.totalReviews}개</h3>
         </Review>
         <ReviewInput onSubmit={handleSubmit}>
           <Input
@@ -52,8 +52,8 @@ const FacilityDetail: React.FC<FacilityDetailProps> = ({ facility }) => {
           <ReviewButton type="submit">등록</ReviewButton>
         </ReviewInput>
 
-        {facility.review.map((review) => (
-          <div key={review.user}>
+        {facility.reviewSet.map((review) => (
+          <div key={review.reviewId}>
             <Divider sizes={false} />
             <ReviewCard review={review} />
           </div>
